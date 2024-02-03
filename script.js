@@ -6,7 +6,7 @@ const canvasHeight = 600;
 
 canvas.width = canvasWidth;
 canvas.height = canvasHeight;
-canvas.style.background = "#c6c6c6";
+canvas.style.background = "#a5d34d";
 
 //génère le terrain jeu en fonction des dimensions du canvas
 function generateField(){
@@ -39,11 +39,11 @@ function draw(field){
         for(var j = 0; j<field[i].length; ++j){
             switch (field[i][j]){
                 case 0:
-                    context.fillStyle = "#c6c6c6"
+                    context.fillStyle = "#a5d34d";
                     context.fillRect(j*(canvasWidth/field[i].length), i*(canvasHeight/field.length), canvasWidth/field[i].length, canvasHeight/field.length);
                     break;
                 case 1:
-                    context.fillStyle = "#545454"
+                    context.fillStyle = "#009600";
                     context.fillRect(j*(canvasWidth/field[i].length), i*(canvasHeight/field.length), canvasWidth/field[i].length, canvasHeight/field.length);
                     break;
                 case 2:
@@ -76,24 +76,37 @@ function placeApple(field){
 function update(){
     switch(direction){
         case "UP":
+            var nextCoordes = field[coords[coords.length-1][0]-1][coords[coords.length-1][1]];
+            if(nextCoordes == 1 || nextCoordes == 2){
+                alert("game over");
+            }
             coords.push([coords[coords.length-1][0]-1, coords[coords.length-1][1]]);
             field[coords[coords.length-1][0]][coords[coords.length-1][1]] = 2;
             field[coords[0][0]][coords[0][1]] = 0;
             coords.shift();
             break;
         case "DOWN":
+            if(field[coords[coords.length-1][0]+1][coords[coords.length-1][1]] == 1){
+                alert("game over");
+            }
             coords.push([coords[coords.length-1][0]+1, coords[coords.length-1][1]]);
             field[coords[coords.length-1][0]][coords[coords.length-1][1]] = 2;
             field[coords[0][0]][coords[0][1]] = 0;
             coords.shift();
             break;
         case "LEFT":
+            if(field[coords[coords.length-1][0]][coords[coords.length-1][1]-1] == 1){
+                alert("game over");
+            }
             coords.push([coords[coords.length-1][0], coords[coords.length-1][1]-1]);
             field[coords[coords.length-1][0]][coords[coords.length-1][1]] = 2;
             field[coords[0][0]][coords[0][1]] = 0;
             coords.shift();
             break;
         case "RIGHT":
+            if(field[coords[coords.length-1][0]][coords[coords.length-1][1]+1] == 1){
+                alert("game over");
+            }
             coords.push([coords[coords.length-1][0], coords[coords.length-1][1]+1]);
             field[coords[coords.length-1][0]][coords[coords.length-1][1]] = 2;
             field[coords[0][0]][coords[0][1]] = 0;
