@@ -8,8 +8,7 @@ canvas.width = canvasWidth;
 canvas.height = canvasHeight;
 canvas.style.background = "#c6c6c6";
 
-var field = [];
-
+//génère le terrain jeu en fonction des dimensions du canvas
 function generateField(){
     for(var i = 0; i < canvasHeight/30; ++i){
         field.push([]);
@@ -33,9 +32,8 @@ function generateField(){
     field[16][15] = 2;
     field[15][15] = 2;
 }
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-}
+
+//dessine le terrain de jeu sur le canvas
 function draw(field){
     for(var i = 0; i<field.length; ++i){
         for(var j = 0; j<field[i].length; ++j){
@@ -63,6 +61,7 @@ function draw(field){
     }
 }
 
+//place une pomme sur le terrain de jeu de magnère aléatoire mais pas sur le snake
 function placeApple(field){
     var appleX = Math.floor(Math.random() * (field.length-2));
     var appleY = Math.floor(Math.random() * (field[1].length-2));
@@ -73,9 +72,50 @@ function placeApple(field){
         placeApple(field);
     }
 }
+
+function update(){
+    switch(direction){
+        case "UP":
+            coords.push([coords[coords.length-1][0]-1, coords[coords.length-1][1]]);
+            field[coords[coords.length-1][0]][coords[coords.length-1][1]] = 2;
+            field[coords[0][0]][coords[0][1]] = 0;
+            coords.shift();
+            break;
+        case "DOWN":
+            coords.push([coords[coords.length-1][0]+1, coords[coords.length-1][1]]);
+            field[coords[coords.length-1][0]][coords[coords.length-1][1]] = 2;
+            field[coords[0][0]][coords[0][1]] = 0;
+            coords.shift();
+            break;
+        case "LEFT":
+            coords.push([coords[coords.length-1][0], coords[coords.length-1][1]-1]);
+            field[coords[coords.length-1][0]][coords[coords.length-1][1]] = 2;
+            field[coords[0][0]][coords[0][1]] = 0;
+            coords.shift();
+            break;
+        case "RIGHT":
+            coords.push([coords[coords.length-1][0], coords[coords.length-1][1]+1]);
+            field[coords[coords.length-1][0]][coords[coords.length-1][1]] = 2;
+            field[coords[0][0]][coords[0][1]] = 0;
+            coords.shift();
+            break;
+    }
+    draw(field);
+}
+
+//-------------------------------
+//            MAIN
+
+var coords = [[17,15],[16,15],[15,15]]
+var direction = "UP";
+
+var field = [];
 generateField();
 
 placeApple(field);
 
 draw(field);
+
+setInterval(update, 500);
+//-------------------------------
 
