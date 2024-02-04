@@ -102,9 +102,12 @@ function update(){
             break;
     }
     if(field[nextCoordesX][nextCoordesY] == 1 || field[nextCoordesX][nextCoordesY] == 2){
-        alert("game over");
+        alert("game over      score : " + score);
+        return 0;
     }
     else if(field[nextCoordesX][nextCoordesY] == 3){
+        score += 1;
+        document.getElementById("scoreDisplay").innerText = "Score : " + score;
         coords.push([nextCoordesX, nextCoordesY]);
         field[coords[coords.length-1][0]][coords[coords.length-1][1]] = 2;
         draw(field);
@@ -144,6 +147,7 @@ document.body.addEventListener("keydown", (ev) => {
 });
 
 var field = [];
+var score = 0;
 generateField();
 
 placeApple(field);
