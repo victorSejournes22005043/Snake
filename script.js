@@ -119,6 +119,7 @@ function update(){
         field[coords[0][0]][coords[0][1]] = 0;
         coords.shift();
     }
+    setTimeout(update, 100);
 }
 
 //-------------------------------
@@ -154,6 +155,7 @@ placeApple(field);
 
 draw(field);
 
-setInterval(update, 100);
+//setInterval(update, 100);
+update();
 //-------------------------------
 
