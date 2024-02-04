@@ -76,43 +76,38 @@ function placeApple(field){
 function update(){
     switch(direction){
         case "UP":
-            var nextCoordes = field[coords[coords.length-1][0]-1][coords[coords.length-1][1]];
-            if(nextCoordes == 1 || nextCoordes == 2){
+            var nextCoordesX = coords[coords.length-1][0]-1;
+            var nextCoordesY = coords[coords.length-1][1];
+            if(field[nextCoordesX][nextCoordesY] == 1 || field[nextCoordesX][nextCoordesY] == 2){
                 alert("game over");
             }
-            coords.push([coords[coords.length-1][0]-1, coords[coords.length-1][1]]);
-            field[coords[coords.length-1][0]][coords[coords.length-1][1]] = 2;
-            field[coords[0][0]][coords[0][1]] = 0;
-            coords.shift();
             break;
         case "DOWN":
-            if(field[coords[coords.length-1][0]+1][coords[coords.length-1][1]] == 1){
+            var nextCoordesX = coords[coords.length-1][0]+1;
+            var nextCoordesY = coords[coords.length-1][1];
+            if(field[nextCoordesX][nextCoordesY] == 1 || field[nextCoordesX][nextCoordesY] == 2){
                 alert("game over");
             }
-            coords.push([coords[coords.length-1][0]+1, coords[coords.length-1][1]]);
-            field[coords[coords.length-1][0]][coords[coords.length-1][1]] = 2;
-            field[coords[0][0]][coords[0][1]] = 0;
-            coords.shift();
             break;
         case "LEFT":
-            if(field[coords[coords.length-1][0]][coords[coords.length-1][1]-1] == 1){
+            var nextCoordesX = coords[coords.length-1][0];
+            var nextCoordesY = coords[coords.length-1][1]-1;
+            if(field[nextCoordesX][nextCoordesY] == 1 || field[nextCoordesX][nextCoordesY] == 2){
                 alert("game over");
             }
-            coords.push([coords[coords.length-1][0], coords[coords.length-1][1]-1]);
-            field[coords[coords.length-1][0]][coords[coords.length-1][1]] = 2;
-            field[coords[0][0]][coords[0][1]] = 0;
-            coords.shift();
             break;
         case "RIGHT":
-            if(field[coords[coords.length-1][0]][coords[coords.length-1][1]+1] == 1){
+            var nextCoordesX = coords[coords.length-1][0];
+            var nextCoordesY = coords[coords.length-1][1]+1;
+            if(field[nextCoordesX][nextCoordesY] == 1 || field[nextCoordesX][nextCoordesY] == 2){
                 alert("game over");
             }
-            coords.push([coords[coords.length-1][0], coords[coords.length-1][1]+1]);
-            field[coords[coords.length-1][0]][coords[coords.length-1][1]] = 2;
-            field[coords[0][0]][coords[0][1]] = 0;
-            coords.shift();
             break;
     }
+    coords.push([nextCoordesX, nextCoordesY]);
+    field[coords[coords.length-1][0]][coords[coords.length-1][1]] = 2;
+    field[coords[0][0]][coords[0][1]] = 0;
+    coords.shift();
     draw(field);
 }
 
@@ -122,6 +117,25 @@ function update(){
 var coords = [[17,15],[16,15],[15,15]]
 var direction = "UP";
 
+document.body.addEventListener("keydown", (ev) => {
+    if (direction == "UP" || direction == "DOWN"){
+        if (ev.key == "ArrowRight"){
+            direction = "RIGHT";
+        }
+        else if (ev.key == "ArrowLeft"){
+            direction = "LEFT";
+        }
+    }
+    else if (direction == "LEFT" || direction == "RIGHT"){
+        if (ev.key == "ArrowUp"){
+            direction = "UP";
+        }
+        else if (ev.key == "ArrowDown"){
+            direction = "DOWN";
+        }
+    }
+});
+
 var field = [];
 generateField();
 
@@ -129,6 +143,6 @@ placeApple(field);
 
 draw(field);
 
-setInterval(update, 500);
+setInterval(update, 100);
 //-------------------------------
 
