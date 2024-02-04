@@ -47,10 +47,19 @@ function draw(field){
                     context.fillRect(j*(canvasWidth/field[i].length), i*(canvasHeight/field.length), canvasWidth/field[i].length, canvasHeight/field.length);
                     break;
                 case 2:
-                    context.fillStyle = "#44cdff"
+                    context.beginPath();
+                    context.fillStyle = "#45a5ff"
+                    for(var coordsIndex = 0; coordsIndex<coords.length; ++coordsIndex){
+                        if (coords[coordsIndex][0] == i && coords[coordsIndex][1] == j){
+                            let colorString = `rgb(${100 - (75/coords.length)*coordsIndex}, ${200 - (75/coords.length)*coordsIndex}, 255)`;
+                            context.fillStyle = colorString;
+                            console.log(colorString);
+                        }
+                    }
                     context.fillRect(j*(canvasWidth/field[i].length), i*(canvasHeight/field.length), canvasWidth/field[i].length, canvasHeight/field.length);
                     break;
                 case 3:
+                    context.beginPath();
                     context.fillStyle = "#ff0000"
                     context.arc(j*(canvasWidth/field[i].length)+15, i*(canvasHeight/field.length)+15, (canvasWidth/field[i].length)/2, 0, Math.PI * 2, true);
                     context.fill();
@@ -78,37 +87,35 @@ function update(){
         case "UP":
             var nextCoordesX = coords[coords.length-1][0]-1;
             var nextCoordesY = coords[coords.length-1][1];
-            if(field[nextCoordesX][nextCoordesY] == 1 || field[nextCoordesX][nextCoordesY] == 2){
-                alert("game over");
-            }
             break;
         case "DOWN":
             var nextCoordesX = coords[coords.length-1][0]+1;
             var nextCoordesY = coords[coords.length-1][1];
-            if(field[nextCoordesX][nextCoordesY] == 1 || field[nextCoordesX][nextCoordesY] == 2){
-                alert("game over");
-            }
             break;
         case "LEFT":
             var nextCoordesX = coords[coords.length-1][0];
             var nextCoordesY = coords[coords.length-1][1]-1;
-            if(field[nextCoordesX][nextCoordesY] == 1 || field[nextCoordesX][nextCoordesY] == 2){
-                alert("game over");
-            }
             break;
         case "RIGHT":
             var nextCoordesX = coords[coords.length-1][0];
             var nextCoordesY = coords[coords.length-1][1]+1;
-            if(field[nextCoordesX][nextCoordesY] == 1 || field[nextCoordesX][nextCoordesY] == 2){
-                alert("game over");
-            }
             break;
     }
-    coords.push([nextCoordesX, nextCoordesY]);
-    field[coords[coords.length-1][0]][coords[coords.length-1][1]] = 2;
-    field[coords[0][0]][coords[0][1]] = 0;
-    coords.shift();
-    draw(field);
+    if(field[nextCoordesX][nextCoordesY] == 1 || field[nextCoordesX][nextCoordesY] == 2){
+        alert("game over");
+    }
+    else if(field[nextCoordesX][nextCoordesY] == 3){
+        coords.push([nextCoordesX, nextCoordesY]);
+        field[coords[coords.length-1][0]][coords[coords.length-1][1]] = 2;
+        draw(field);
+        placeApple(field);
+    } else {
+        coords.push([nextCoordesX, nextCoordesY]);
+        field[coords[coords.length-1][0]][coords[coords.length-1][1]] = 2;
+        draw(field);
+        field[coords[0][0]][coords[0][1]] = 0;
+        coords.shift();
+    }
 }
 
 //-------------------------------
