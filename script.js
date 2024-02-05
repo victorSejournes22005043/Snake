@@ -83,7 +83,7 @@ function placeApple(field){
 }
 
 function update(){
-    switch(realDirection){
+    switch(direction){
         case "UP":
             var nextCoordesX = coords[coords.length-1][0]-1;
             var nextCoordesY = coords[coords.length-1][1];
@@ -177,3 +177,4 @@ draw(field);
 //setInterval(update, 100);
 update();
 //-------------------------------
+
