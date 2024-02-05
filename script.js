@@ -119,7 +119,7 @@ function update(){
         field[coords[0][0]][coords[0][1]] = 0;
         coords.shift();
     }
-    setTimeout(update, 100);
+    setTimeout(update, 75);
 }
 
 //-------------------------------
@@ -146,6 +146,39 @@ document.body.addEventListener("keydown", (ev) => {
         }
     }
 });
+
+document.body.addEventListener("touchstart", (ev) => {
+    // Get the touch position
+    const touchX = ev.touches[0].clientX;
+    const touchY = ev.touches[0].clientY;
+
+    // Determine the direction based on touch position
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+
+    if (direction == "UP" || direction == "DOWN"){
+        if (touchX > screenWidth / 2){
+            direction = "RIGHT";
+        }
+        else {
+            direction = "LEFT";
+        }
+    }
+    else if (direction == "LEFT" || direction == "RIGHT"){
+        if (touchY < screenHeight / 2){
+            direction = "UP";
+        }
+        else {
+            direction = "DOWN";
+        }
+    }
+});
+
+// Prevent default touchmove behavior to avoid scrolling on mobile
+document.body.addEventListener("touchmove", (ev) => {
+    ev.preventDefault();
+});
+
 
 var field = [];
 var score = 0;
