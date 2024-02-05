@@ -83,7 +83,7 @@ function placeApple(field){
 }
 
 function update(){
-    switch(direction){
+    switch(realDirection){
         case "UP":
             var nextCoordesX = coords[coords.length-1][0]-1;
             var nextCoordesY = coords[coords.length-1][1];
@@ -119,7 +119,25 @@ function update(){
         field[coords[0][0]][coords[0][1]] = 0;
         coords.shift();
     }
-    setTimeout(update, 100);
+
+    if (realDirection == "UP" || realDirection == "DOWN"){
+        if (direction == "RIGHT"){
+            realDirection = "RIGHT";
+        }
+        else if (direction == "LEFT"){
+            realDirection = "LEFT";
+        }
+    }
+    else if (realDirection == "LEFT" || realDirection == "RIGHT"){
+        if (direction == "UP"){
+            realDirection = "UP";
+        }
+        else if (direction == "DOWN"){
+            realDirection = "DOWN";
+        }
+    }
+
+    setTimeout(update, 75);
 }
 
 //-------------------------------
@@ -127,6 +145,7 @@ function update(){
 
 var coords = [[17,15],[16,15],[15,15]]
 var direction = "UP";
+var realDirection = "UP";
 
 document.body.addEventListener("keydown", (ev) => {
     if (direction == "UP" || direction == "DOWN"){
@@ -158,4 +177,3 @@ draw(field);
 //setInterval(update, 100);
 update();
 //-------------------------------
-
