@@ -53,7 +53,6 @@ function draw(field){
                         if (coords[coordsIndex][0] == i && coords[coordsIndex][1] == j){
                             let colorString = `rgb(${100 - (75/coords.length)*coordsIndex}, ${200 - (75/coords.length)*coordsIndex}, 255)`;
                             context.fillStyle = colorString;
-                            console.log(colorString);
                         }
                     }
                     context.fillRect(j*(canvasWidth/field[i].length), i*(canvasHeight/field.length), canvasWidth/field[i].length, canvasHeight/field.length);
@@ -102,6 +101,13 @@ function update(){
             break;
     }
     if(field[nextCoordesX][nextCoordesY] == 1 || field[nextCoordesX][nextCoordesY] == 2){
+        if (score > highScore) {
+            // Set the high score to the users' current points
+            highScore = parseInt(score);
+            // Store the high score
+            localStorage.setItem('highScore', highScore);
+        }
+        document.getElementById("highScoreDisplay").innerText = "Highscore : " + highScore;
         alert("game over      score : " + score);
         return 0;
     }
@@ -168,6 +174,9 @@ document.body.addEventListener("keydown", (ev) => {
 
 var field = [];
 var score = 0;
+var highScore = localStorage.getItem('highScore') || 0;
+
+document.getElementById("highScoreDisplay").innerText = "Highscore : " + highScore;
 generateField();
 
 placeApple(field);

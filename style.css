@@ -6,9 +6,16 @@ body{
     flex-direction: column;
 }
 
-#scoreDisplay{
+#scoreDisplay, #highScoreDisplay{
     font-size: 25px;
     font-family: "DejaVu Sans";
+}
+
+#scoreDisplayDiv{
+    width: 900px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
 canvas{
