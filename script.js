@@ -39,7 +39,11 @@ function draw(field){
         for(var j = 0; j<field[i].length; ++j){
             switch (field[i][j]){
                 case 0:
-                    context.fillStyle = "#a5d34d";
+                    if(i%2 == 0 && j%2 == 0 || i%2 != 0 && j%2 != 0){
+                        context.fillStyle = "#a5d34d";
+                    }else{
+                        context.fillStyle = "#7ed34d";
+                    }
                     context.fillRect(j*(canvasWidth/field[i].length), i*(canvasHeight/field.length), canvasWidth/field[i].length, canvasHeight/field.length);
                     break;
                 case 1:
